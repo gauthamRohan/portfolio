@@ -1,0 +1,30 @@
+{
+  "name": "rohan-portfolio",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5173",
+    "server": "node server.js",
+    "start": "node server.js",
+    "import-site": "node scripts/import-site.js",
+    "copy-resume": "node scripts/copy-resume.js",
+    "parse-resume": "node scripts/parse-resume.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1",
+    "pdf-parse": "^1.1.1",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^3.3.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^5.0.0"
+  }
+}

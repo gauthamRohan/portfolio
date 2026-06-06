@@ -1,0 +1,37 @@
+{
+  "name": "ROHAN SAKTHIVEL P",
+  "sections": {
+    "summary": [
+      "Data Scientist with 1+ years of experience designing and deploying predictive models, capacity forecasting systems, and",
+      "agentic AI workflows on enterprise-grade platforms. Proficient in Python, GCP, and end-to-end ML pipelines spanning data",
+      "processing, model evaluation, and production deployment. Passionate about applying data science to solve real-world",
+      "infrastructure and business problems at scale."
+    ],
+    "education": [
+      "B.E. Medical Electronics  |  Saveetha Engineering College  |  2020 - 2024  |  CGPA: 8.4",
+      "HSC  |  Christ Matriculation School  |  2019 - 2020  |  78%"
+    ],
+    "skills": [
+      "Programming:  Python, C",
+      "MLOps & Cloud:  GCP, Kubeflow Pipelines, Jupyter, Docker",
+      "Data Science:  EDA, Data Processing, Model Selection & Training, Model Evaluation, Deep Learning",
+      "GenAI / LLMs:  RAG & Vector Databases, Orchestration & Agents, Guardrails",
+      "Automation & APIs:  Python Automation, REST APIs"
+    ],
+    "experience": [
+      "Data Scientist  |  Tata Consultancy Services (TCS)  -  Chennai, India 2024 - Present"
+    ],
+    "projects": [
+      "Osteosarcoma Detection using Binary CNN",
+      "• Built an end-to-end ML pipeline for bone cancer cell detection achieving 90%+ classification accuracy.",
+      "• Applied SMOTE for class imbalance handling, performed thorough model evaluation, and deployed via a Flask web",
+      "interface."
+    ],
+    "certifications": [
+      "• Research Publication - IEEE International Conference (ICITITE), VIT",
+      "• Azure Agentic AI Fundamentals - Microsoft Azure Workshop Badge",
+      "• NPTEL Certified - Python Programming, Internet of Things"
+    ]
+  },
+  "rawText": "\n\nROHAN SAKTHIVEL P \nData Scientist \nChennai, India  |  +91 701061 1469  |  rohanpkg07@gmail.com \nPROFESSIONAL SUMMARY \nData Scientist with 1+ years of experience designing and deploying predictive models, capacity forecasting systems, and \nagentic AI workflows on enterprise-grade platforms. Proficient in Python, GCP, and end-to-end ML pipelines spanning data \nprocessing, model evaluation, and production deployment. Passionate about applying data science to solve real-world \ninfrastructure and business problems at scale. \nEDUCATION \nB.E. Medical Electronics  |  Saveetha Engineering College  |  2020 - 2024  |  CGPA: 8.4 \nHSC  |  Christ Matriculation School  |  2019 - 2020  |  78% \nTECHNICAL SKILLS \nProgramming:  Python, C \nMLOps & Cloud:  GCP, Kubeflow Pipelines, Jupyter, Docker \nData Science:  EDA, Data Processing, Model Selection & Training, Model Evaluation, Deep Learning \nGenAI / LLMs:  RAG & Vector Databases, Orchestration & Agents, Guardrails \nAutomation & APIs:  Python Automation, REST APIs \nPROFESSIONAL EXPERIENCE \nData Scientist  |  Tata Consultancy Services (TCS)  -  Chennai, India 2024 - Present \nEnterprise Projects \nInfrastructure Intelligence Platform - Europe's Largest Furniture Brand \n• Developed a capacity forecasting model on CPU/memory utilization data from 2000+ servers, predicting future \ndemand trends and enabling proactive infrastructure scaling that prevented resource exhaustion. \n• Built an ML-driven Client Roaming success prediction model that analyzed wireless session patterns to identify \nroaming failures before they impacted end-users, improving network reliability across enterprise sites. \n• Designed and deployed an Agentic backup monitoring dashboard that autonomously evaluates backup job health, \ntriggers alerts, and generates incident summaries using LLM-based reasoning. \nEnterprise Automation for Device Migration - Europe's Largest Clothing Brand \n• Developed Python automation scripts for large-scale AOS device migration across enterprise infrastructure, \nintegrating REST APIs for metadata extraction, validation, and migration with full error handling. \n• Automated workflows previously handled by ~15 engineers across 2 shifts; reduced the project timeline from 1 year \nto 6 months with a 95%+ migration success rate. \nPersonal Projects \nStock Sentiment Analysis Bot \n• Built an automated n8n workflow that scrapes and aggregates financial news, runs sentiment analysis on stock \nmentions, and delivers structured buy/sell/hold signals to a personal Discord channel bot. \nAcademic Projects \nOsteosarcoma Detection using Binary CNN \n• Built an end-to-end ML pipeline for bone cancer cell detection achieving 90%+ classification accuracy. \n• Applied SMOTE for class imbalance handling, performed thorough model evaluation, and deployed via a Flask web \ninterface. \nPUBLICATIONS & CERTIFICATIONS \n• Research Publication - IEEE International Conference (ICITITE), VIT \n• Azure Agentic AI Fundamentals - Microsoft Azure Workshop Badge \n• NPTEL Certified - Python Programming, Internet of Things "
+}

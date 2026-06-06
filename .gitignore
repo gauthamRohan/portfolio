@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+.env.example
+upload_bio.py
+QUICK_START.md
