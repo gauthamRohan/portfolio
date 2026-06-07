@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -13,54 +12,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-function buildContextFallback(query, context) {
-  if (!context) {
-    return "I'm temporarily unable to reach the AI response service, and I also don't have portfolio context loaded for this question. Please try again in a bit.";
-  }
-
-  const sentences = context
-    .split(/\r?\n+/)
-    .flatMap((block) => block.split(/(?<=[.!?])\s+/))
-    .map((sentence) => sentence.trim())
-    .filter(Boolean);
-
-  const queryTerms = query
-    .toLowerCase()
-    .split(/[^a-z0-9]+/i)
-    .filter((term) => term.length > 2);
-
-  const ranked = sentences
-    .map((sentence) => {
-      const lower = sentence.toLowerCase();
-      const score = queryTerms.reduce((total, term) => total + (lower.includes(term) ? 1 : 0), 0);
-      return { sentence, score };
-    })
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
-    .map((item) => item.sentence);
-
-  const summary = ranked.length > 0
-    ? ranked.join(' ')
-    : context.slice(0, 400).trim();
-
-  return `I'm temporarily unable to reach the AI response service because the Gemini quota is exhausted. Based on Rohan's portfolio data, here's the most relevant information I found: ${summary}`;
-}
-
-function extractRetryDelay(errorBody) {
-  const retryMatch = errorBody.match(/Please retry in ([\d.]+)s/i);
-  if (retryMatch) {
-    return Math.max(1, Math.ceil(Number(retryMatch[1])));
-  }
-
-  const delayMatch = errorBody.match(/"retryDelay"\s*:\s*"(\d+)s"/i);
-  if (delayMatch) {
-    return Math.max(1, Number(delayMatch[1]));
-  }
-
-  return null;
-}
 
 app.use(cors());
 app.use(express.json());
@@ -137,77 +88,57 @@ app.post('/api/search', async (req, res) => {
   }
 });
 
-// API endpoint for Gemini chat
+// API endpoint for chat
 app.post('/api/chat', async (req, res) => {
   try {
     const { query, context } = req.body;
-    
+
     if (!query) {
       return res.status(400).json({ error: 'Query is required' });
     }
 
-    const geminiKey = process.env.GEMINI_KEY;
-    if (!geminiKey) {
-      return res.status(500).json({ error: 'GEMINI_KEY not configured' });
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      return res.status(500).json({ error: 'GITHUB_TOKEN not configured' });
     }
 
-    const prompt = `You are Rohan's personal AI assistant. You MUST answer ONLY based on the context below. 
-    NEVER use outside knowledge or make up information.
-    If the answer is not in the context, say "I don't have that information about Rohan."
-
-    CONTEXT:
-    ${context || 'No relevant information found.'}
-
-    QUESTION: ${query}
-
-    Answer conversationally and friendly, referring to Rohan in third person.`;
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+    const endpoint = 'https://models.inference.ai.azure.com/chat/completions';
 
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${githubToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        contents: [
+        model: 'gpt-4o',
+        messages: [
           {
-            parts: [
-              {
-                text: prompt
-              }
-            ]
+            role: 'system',
+            content: "You are Rohan Sakthivel P's personal AI assistant. Answer ONLY based on the context provided. Never use outside knowledge or make up information. If the answer is not in the context, say I don't have that information about Rohan. Be conversational and friendly."
+          },
+          {
+            role: 'user',
+            content: `Context: ${context}\n\nQuestion: ${query}`
           }
-        ]
+        ],
+        temperature: 0.7,
+        max_tokens: 500
       })
     });
 
     if (!response.ok) {
       const body = await response.text().catch(() => '');
-
-      if (response.status === 429) {
-        const retryAfter = extractRetryDelay(body);
-        const message = buildContextFallback(query, context);
-        return res.status(503).json({
-          error: 'Gemini quota exceeded',
-          message,
-          provider: 'gemini',
-          retryAfter
-        });
-      }
-
-      throw new Error(`Gemini API returned ${response.status}: ${body}`);
+      throw new Error(`GitHub Models API returned ${response.status}: ${body}`);
     }
 
     const data = await response.json();
-    const message = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    const responseText = data.choices?.[0]?.message?.content || 'No response';
 
-    res.json({ message });
+    res.json({ message: responseText });
   } catch (error) {
     console.error('Chat error:', error);
-    res.status(500).json({
-      error: 'Chat request failed',
-      message: 'The assistant is temporarily unavailable. Please try again shortly.'
-    });
+    res.status(500).json({ error: 'Chat failed', message: 'Assistant temporarily unavailable.' });
   }
 });
 
